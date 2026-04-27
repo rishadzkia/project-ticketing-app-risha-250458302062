@@ -5,7 +5,7 @@ import 'package:ticketing_app/core/presentation/auth/pages/splash_screen.dart';
 
 void main() {
   runApp(const MainApp());
-}
+} 
 
 class MainApp extends StatelessWidget { 
   const MainApp({super.key});
