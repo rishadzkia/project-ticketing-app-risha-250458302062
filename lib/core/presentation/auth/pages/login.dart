@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
       backgroundColor: AppColors.primary,
       // Mau ada penumpukan background dan form login (Menimpa)
       body: Stack(
-        children: [ 
+        children: [
           SizedBox(
             height: 260,
             child: Center(child: Assets.images.logoBlue.image(height: 200)),
@@ -39,7 +39,7 @@ class LoginPage extends StatelessWidget {
                           label: "Email Address",
                         ),
                         SpaceHeight(36),
-                        CustomTextField(
+                        CustomTextField( 
                           controller: passwordController,
                           label: "Password",
                           obscureText: true,
