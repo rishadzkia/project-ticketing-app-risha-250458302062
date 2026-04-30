@@ -36,6 +36,7 @@ dev_dependencies:
   flutter_gen: ^5.14.0
   flutter_gen_runner: ^5.14.0
   freezed: ^3.2.5
+  qr_flutter: ^4.1.0
 
 flutter:
   uses-material-design: true
