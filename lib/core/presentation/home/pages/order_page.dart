@@ -1,12 +1,14 @@
 import 'package:dartz/dartz_streaming.dart' hide Text;
 import 'package:flutter/material.dart';
 import 'package:ticketing_app/core/components/components.dart';
+import 'package:ticketing_app/core/extensions/build_context_ext.dart';
+import 'package:ticketing_app/core/extensions/num_ext.dart';
 import 'package:ticketing_app/core/presentation/home/model/product_model.dart';
 import 'package:ticketing_app/core/presentation/home/widget/order_card.dart';
 
 class OrderPage extends StatelessWidget {
   const OrderPage({super.key});
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +25,33 @@ class OrderPage extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(24),
-        child: Row(children: [Expanded(flex: 1, child: Column())]),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Order Summary'),
+                  Text(
+                    4000.currencyFormatRp,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Button.filled(
+                onPressed: () {
+                  context.pop();
+                },
+                label: 'Process',
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
