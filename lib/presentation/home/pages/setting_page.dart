@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ticketing_app/core/assets/assets.gen.dart';
-import 'package:ticketing_app/core/presentation/home/dialog/logout_dialog.dart';
-import 'package:ticketing_app/core/presentation/home/dialog/sync_dialog.dart';
-import 'package:ticketing_app/core/presentation/home/widget/setting_button.dart';
+import 'package:ticketing_app/presentation/home/dialog/logout_dialog.dart';
+import 'package:ticketing_app/presentation/home/dialog/sync_dialog.dart';
+import 'package:ticketing_app/presentation/home/widget/setting_button.dart';
 
 class SettingPage extends StatelessWidget {
   const SettingPage({super.key});

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ticketing_app/core/core.dart';
-import 'package:ticketing_app/core/presentation/home/model/printer_model.dart';
-import 'package:ticketing_app/core/presentation/home/widget/menu_printer_button.dart';
-import 'package:ticketing_app/core/presentation/home/widget/menu_printer_content.dart';
+import 'package:ticketing_app/presentation/home/model/printer_model.dart';
+import 'package:ticketing_app/presentation/home/widget/menu_printer_button.dart';
+import 'package:ticketing_app/presentation/home/widget/menu_printer_content.dart';
 
 class SettingPrinterPage extends StatefulWidget {
   const SettingPrinterPage({super.key});

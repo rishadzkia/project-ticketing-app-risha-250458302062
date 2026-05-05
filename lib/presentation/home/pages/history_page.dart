@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ticketing_app/core/core.dart';
-import 'package:ticketing_app/core/presentation/home/model/history_model.dart';
-import 'package:ticketing_app/core/presentation/home/widget/history_card.dart';
+import 'package:ticketing_app/presentation/home/model/history_model.dart';
+import 'package:ticketing_app/presentation/home/widget/history_card.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});

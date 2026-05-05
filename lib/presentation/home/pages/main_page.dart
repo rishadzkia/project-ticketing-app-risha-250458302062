@@ -3,12 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:ticketing_app/core/assets/assets.gen.dart';
 import 'package:ticketing_app/core/constants/colors.dart';
 import 'package:ticketing_app/core/extensions/build_context_ext.dart';
-import 'package:ticketing_app/core/presentation/home/pages/history_page.dart';
-import 'package:ticketing_app/core/presentation/home/pages/order_page.dart';
-import 'package:ticketing_app/core/presentation/home/pages/setting_page.dart';
-import 'package:ticketing_app/core/presentation/home/pages/setting_printer_page.dart';
-import 'package:ticketing_app/core/presentation/home/pages/ticket_page.dart';
-import 'package:ticketing_app/core/presentation/home/widget/nav_item.dart';
+import 'package:ticketing_app/presentation/home/pages/history_page.dart';
+import 'package:ticketing_app/presentation/home/pages/order_page.dart';
+import 'package:ticketing_app/presentation/home/pages/setting_page.dart';
+import 'package:ticketing_app/presentation/home/pages/setting_printer_page.dart';
+import 'package:ticketing_app/presentation/home/pages/ticket_page.dart';
+import 'package:ticketing_app/presentation/home/widget/nav_item.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -87,7 +87,7 @@ class _MainPageState extends State<MainPage> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index; 
+      _selectedIndex = index;
     });
   }
 }

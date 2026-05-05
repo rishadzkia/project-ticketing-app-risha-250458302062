@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:ticketing_app/core/components/components.dart';
 import 'package:ticketing_app/core/extensions/build_context_ext.dart';
 import 'package:ticketing_app/core/extensions/num_ext.dart';
-import 'package:ticketing_app/core/presentation/home/model/product_model.dart';
-import 'package:ticketing_app/core/presentation/home/widget/order_card.dart';
+import 'package:ticketing_app/presentation/home/model/product_model.dart';
+import 'package:ticketing_app/presentation/home/widget/order_card.dart';
 
 class OrderPage extends StatelessWidget {
   const OrderPage({super.key});

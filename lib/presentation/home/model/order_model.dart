@@ -1,4 +1,4 @@
-import 'package:ticketing_app/core/presentation/home/model/product_model.dart';
+import 'package:ticketing_app/presentation/home/model/product_model.dart';
 
 class OrderModel {
   final ProductModel product;

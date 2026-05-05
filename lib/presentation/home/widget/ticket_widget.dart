@@ -4,9 +4,9 @@ import 'package:ticketing_app/core/assets/assets.gen.dart';
 import 'package:ticketing_app/core/components/components.dart';
 import 'package:ticketing_app/core/constants/colors.dart';
 import 'package:ticketing_app/core/extensions/extensions.dart';
-import 'package:ticketing_app/core/presentation/home/dialog/delete_ticket_dialog.dart';
-import 'package:ticketing_app/core/presentation/home/dialog/edit_ticket_dialog.dart';
-import 'package:ticketing_app/core/presentation/home/model/product_model.dart';
+import 'package:ticketing_app/presentation/home/dialog/delete_ticket_dialog.dart';
+import 'package:ticketing_app/presentation/home/dialog/edit_ticket_dialog.dart';
+import 'package:ticketing_app/presentation/home/model/product_model.dart';
 
 class TicketCardWidget extends StatelessWidget {
   final ProductModel itemProduk;

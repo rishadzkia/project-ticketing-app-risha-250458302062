@@ -4,7 +4,7 @@ import 'package:ticketing_app/core/components/components.dart';
 import 'package:ticketing_app/core/constants/colors.dart';
 import 'package:ticketing_app/core/extensions/date_time_ext.dart';
 import 'package:ticketing_app/core/extensions/extensions.dart';
-import 'package:ticketing_app/core/presentation/home/model/history_model.dart';
+import 'package:ticketing_app/presentation/home/model/history_model.dart';
 
 class HistoryCard extends StatelessWidget {
   // Nama custom kalo mau manggil data dummy

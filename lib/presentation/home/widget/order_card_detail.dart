@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:ticketing_app/core/components/components.dart';
 import 'package:ticketing_app/core/constants/colors.dart';
 import 'package:ticketing_app/core/core.dart';
-import 'package:ticketing_app/core/presentation/home/model/order_model.dart';
+import 'package:ticketing_app/presentation/home/model/order_model.dart';
 
 class OrderCardDetail extends StatelessWidget {
   final OrderModel itemOrder;

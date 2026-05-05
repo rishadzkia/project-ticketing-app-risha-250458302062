@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ticketing_app/core/assets/assets.gen.dart';
 import 'package:ticketing_app/core/components/components.dart';
-import 'package:ticketing_app/core/presentation/home/dialog/add_ticket_dialog.dart';
-import 'package:ticketing_app/core/presentation/home/model/product_model.dart';
-import 'package:ticketing_app/core/presentation/home/widget/ticket_widget.dart';
+import 'package:ticketing_app/presentation/home/dialog/add_ticket_dialog.dart';
+import 'package:ticketing_app/presentation/home/model/product_model.dart';
+import 'package:ticketing_app/presentation/home/widget/ticket_widget.dart';
 
 class TicketPage extends StatelessWidget {
   const TicketPage({super.key});
