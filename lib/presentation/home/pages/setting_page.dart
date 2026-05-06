@@ -13,6 +13,7 @@ class SettingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Setting')),
       body: GridView.count(
+        // Bikin 2 kolom nya
         crossAxisCount: 2,
         padding: EdgeInsets.all(24),
         crossAxisSpacing: 15,

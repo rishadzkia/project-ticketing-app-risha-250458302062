@@ -36,6 +36,7 @@ class OrderDetailPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // Karena setiap button nya ada action nya masing masing yang berneda
             StatefulBuilder(
               builder: (context, setState) => Row(
                 children: [
@@ -113,7 +114,9 @@ class OrderDetailPage extends StatelessWidget {
                       ],
                     ),
                   ),
+                  // Mengambil space
                   Expanded(
+                    // Mau ngambil satu space, jadi biar langusng kebagi 2
                     flex: 1,
                     child: Button.filled(
                       onPressed: () {
@@ -126,6 +129,7 @@ class OrderDetailPage extends StatelessWidget {
                           showDialog(
                             context: context,
                             builder: (context) =>
+                                // Harus diikutin sama yang required
                                 PaymentCashDialog(totalPrice: 14000),
                           );
                         }

@@ -14,6 +14,7 @@ class TicketPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Kelola Tiket'),
+        // Pake action karena button tambah nya ada di sebelah kanan
         actions: [
           IconButton(
             onPressed: () {

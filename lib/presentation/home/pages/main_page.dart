@@ -47,6 +47,7 @@ class _MainPageState extends State<MainPage> {
               iconPath: Assets.icons.nav.home.path,
               label: "Home",
               isActive: _selectedIndex == 0,
+              // Ngejalanin fungsi index 0
               onTap: () => _onItemTapped(0),
             ),
             NavItem(
@@ -70,6 +71,7 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
       ),
+      // GestureDetector fungisnya lebih ke fungsi
       floatingActionButton: GestureDetector(
         onTap: () => context.push(SettingPrinterPage()),
         child: Container(
@@ -85,6 +87,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+  // Ini fungsi atau logic untuk si onItemTapped
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;

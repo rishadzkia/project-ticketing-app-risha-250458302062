@@ -11,6 +11,7 @@ class PaymentCashDialog extends StatefulWidget {
 
 class _PaymentCashDialogState extends State<PaymentCashDialog> {
   final nominalController = TextEditingController();
+  // -1 = Ngga ada yang dipilih
   int paidIndex = -1;
 
   @override

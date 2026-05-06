@@ -27,14 +27,16 @@ class PaymentSuccessPage extends StatelessWidget {
       body: Stack(
         children: [
           Container(
+            // Ini biar color nya setengah setengah
             height: context.deviceHeight / 2,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(12)),
               color: AppColors.primary,
             ),
           ),
-          Container(
+          Container( 
             decoration: BoxDecoration(
+              // Karena mau naruh konten di image
               image: DecorationImage(
                 image: Assets.images.receiptCard.provider(),
                 alignment: Alignment.topCenter,
@@ -112,7 +114,7 @@ class PaymentSuccessPage extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
-        padding: EdgeInsets.fromLTRB(36, 0, 36, 20), 
+        padding: EdgeInsets.fromLTRB(36, 0, 36, 20),
         child: Button.filled(
           onPressed: () {},
           label: 'Cetak Transaksi',

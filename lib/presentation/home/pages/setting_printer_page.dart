@@ -68,6 +68,7 @@ class _SettingPrinterPageState extends State<SettingPrinterPage> {
             ),
           ),
           SpaceHeight(34),
+          // Setting data 
           _Body(
             selectedIndex: selectedIndex,
             // Isi object dari printer model
@@ -116,6 +117,7 @@ class _Body extends StatelessWidget {
             isSelected: selectedIndex == index,
           ),
           separatorBuilder: (context, index) => SpaceHeight(12),
+          // Buat ngeluarin data nya, pake length
           itemCount: dataPrinter.length,
         ),
       );
