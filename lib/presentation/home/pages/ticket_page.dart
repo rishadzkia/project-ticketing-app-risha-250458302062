@@ -9,12 +9,12 @@ import 'package:ticketing_app/presentation/home/widget/ticket_widget.dart';
 class TicketPage extends StatelessWidget {
   const TicketPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
+  @override 
+  Widget build(BuildContext context) { 
     return Scaffold(
       appBar: AppBar(
         title: Text('Kelola Tiket'),
-        // Pake action karena button tambah nya ada di sebelah kanan
+        // Pake action karena button tambah nya ada di sebelah kanan 
         actions: [
           IconButton(
             onPressed: () {
