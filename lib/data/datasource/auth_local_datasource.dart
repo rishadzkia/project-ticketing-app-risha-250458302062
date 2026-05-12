@@ -13,18 +13,23 @@ class AuthLocalDatasource {
   // Ini untuk menyimpan data login
   Future<void> saveAuthData(AuthResponseModel data) async {
     final pref = await SharedPreferences.getInstance();
+    // auth_data khusus label atau loker untuk penyimpanan login
+    // Ngubah ke String karena map terlalu berat di shared prefrensces
     await pref.setString('auth_data', data.toJson());
   }
 
   // Remove data yang login
   Future<void> removeAuthData() async {
+    // Kayak buka lemari sebelum ngapa-ngapain si data pake shared pereferences.getIstnace
     final pref = await SharedPreferences.getInstance();
+    
     await pref.remove('auth_data');
   }
 
   // Ambil data yang login
   Future<AuthResponseModel> getAuthData() async {
     final pref = await SharedPreferences.getInstance();
+    //get strng krn tadi set string 
     final data = pref.getString('auth_data');
     if (data != null) {
       return AuthResponseModel.fromJson(data);

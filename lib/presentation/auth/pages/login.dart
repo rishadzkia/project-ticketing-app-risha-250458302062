@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticketing_app/core/assets/assets.dart';
 import 'package:ticketing_app/core/components/components.dart';
 import 'package:ticketing_app/core/components/custom_text_field.dart';
 import 'package:ticketing_app/core/constants/colors.dart';
+import 'package:ticketing_app/core/core.dart';
+import 'package:ticketing_app/data/datasource/auth_local_datasource.dart';
+import 'package:ticketing_app/presentation/auth/bloc/login/login_bloc.dart';
+import 'package:ticketing_app/presentation/home/pages/main_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -39,14 +44,59 @@ class LoginPage extends StatelessWidget {
                           label: "Email Address",
                         ),
                         SpaceHeight(36),
-                        CustomTextField( 
+                        CustomTextField(
                           controller: passwordController,
                           label: "Password",
                           obscureText: true,
                         ),
                         SpaceHeight(84),
-                        Button.filled(onPressed: () {}, label: "Login"),
-                        SpaceHeight(16),
+                        // Bloc Listener: Buat dengerin perubahan dari bloc,
+                        // klo ada perubahan state dia bakal ngejalanin fungsi yang kita masukkin ke listener
+                        // Biasanya dipakai untuk aksi sekali jalan dan tidak.
+                        // Handling perubahan UI
+                        // Kayak pindah halaman, tampilan snackbar, dialog, simpan token ke penyimpanan lokal, dll.
+                        BlocListener<LoginBloc, LoginState>(
+                          listener: (context, state) {
+                            state.maybeWhen(
+                              orElse: () {},
+                              success: (data) async {
+                                await AuthLocalDatasource().saveAuthData(data);
+                                context.pushReplacement(MainPage());
+                              },
+                              error: (error) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(error),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          // Bloc Builder: Buat membangun UI berdasarkan state dari bloc
+                          // Jadi kalau state berubah, dia bakal bangun ulang tampilan
+                          child: BlocBuilder<LoginBloc, LoginState>(
+                            builder: (context, state) {
+                              return state.maybeWhen(
+                                orElse: () {
+                                  return Button.filled(
+                                    onPressed: () {
+                                      context.read<LoginBloc>().add(
+                                        LoginEvent.login(
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                        ),
+                                      );
+                                    },
+                                    label: "Login",
+                                  );
+                                },
+                                loading: () =>
+                                    Center(child: CircularProgressIndicator()),
+                              );
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),
