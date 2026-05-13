@@ -13,7 +13,7 @@ class OrderCardDetail extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.stroke),
+        border: Border.all(color: AppColors.stroke), 
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
