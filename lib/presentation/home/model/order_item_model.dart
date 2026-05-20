@@ -12,7 +12,7 @@ class OrderItem {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is OrderItem &&
+    return other is OrderItem && 
         other.product == product &&
         other.quantity == quantity;
   }
