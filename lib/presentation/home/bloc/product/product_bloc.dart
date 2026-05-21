@@ -76,7 +76,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       emit(_Loading());
       final requestData = CreateTicketRequestModel(
         name: event.model.name,
-        price: event.model.price,
+        price: event.model.price, 
         stock: event.model.stock,
       );
       final response = await productRemoteDatasource.updateTicket(

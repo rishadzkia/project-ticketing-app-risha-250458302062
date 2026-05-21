@@ -650,13 +650,13 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<Product> products)?  success,TResult Function( dynamic String)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<Product> products)?  success,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Success() when success != null:
 return success(_that.products);case _Error() when error != null:
-return error(_that.String);case _:
+return error(_that.message);case _:
   return orElse();
 
 }
@@ -674,13 +674,13 @@ return error(_that.String);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<Product> products)  success,required TResult Function( dynamic String)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<Product> products)  success,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
 return loading();case _Success():
 return success(_that.products);case _Error():
-return error(_that.String);case _:
+return error(_that.message);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -697,13 +697,13 @@ return error(_that.String);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<Product> products)?  success,TResult? Function( dynamic String)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<Product> products)?  success,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Success() when success != null:
 return success(_that.products);case _Error() when error != null:
-return error(_that.String);case _:
+return error(_that.message);case _:
   return null;
 
 }
@@ -851,10 +851,10 @@ as List<Product>,
 
 
 class _Error implements ProductState {
-  const _Error(this.String);
+  const _Error(this.message);
   
 
- final  dynamic String;
+ final  String message;
 
 /// Create a copy of ProductState
 /// with the given fields replaced by the non-null parameter values.
@@ -866,16 +866,16 @@ _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&const DeepCollectionEquality().equals(other.String, String));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&(identical(other.message, message) || other.message == message));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(String));
+int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString() {
-  return 'ProductState.error(String: $String)';
+  return 'ProductState.error(message: $message)';
 }
 
 
@@ -886,7 +886,7 @@ abstract mixin class _$ErrorCopyWith<$Res> implements $ProductStateCopyWith<$Res
   factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
 @useResult
 $Res call({
- dynamic String
+ String message
 });
 
 
@@ -903,10 +903,10 @@ class __$ErrorCopyWithImpl<$Res>
 
 /// Create a copy of ProductState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? String = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
   return _then(_Error(
-freezed == String ? _self.String : String // ignore: cast_nullable_to_non_nullable
-as dynamic,
+null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
