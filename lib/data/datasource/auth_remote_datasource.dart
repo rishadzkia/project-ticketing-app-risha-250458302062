@@ -70,7 +70,7 @@ class AuthRemoteDatasource {
       print("BODY LOGOUT: ${response.body}");
 
       if (response.statusCode == 200) {
-        return const Right('Logout Berhasil');
+        return const Right('Logout Berhasil'); 
       } else {
         return Left(response.body);
       }

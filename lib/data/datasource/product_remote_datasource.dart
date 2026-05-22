@@ -91,6 +91,7 @@ class ProductRemoteDatasource {
     if (response.statusCode == 200) {
       return Right('Delete berhasil');
     } else {
+      // nganselin pesan yang udh ada di laravel
       return Left(response.body);
     }
   }
