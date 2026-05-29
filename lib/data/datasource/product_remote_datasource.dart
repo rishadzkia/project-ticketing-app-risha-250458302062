@@ -85,7 +85,7 @@ class ProductRemoteDatasource {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
         'Authorization': 'Bearer ${authData.token}',
-      },
+      }, 
     );
 
     if (response.statusCode == 200) {

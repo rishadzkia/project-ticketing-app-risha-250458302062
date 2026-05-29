@@ -25,12 +25,13 @@ class OrderDetailPage extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView.separated(
-        itemBuilder: (context, index) =>
-            OrderCardDetail(itemOrder: orders[index]),
-        separatorBuilder: (context, index) => SpaceHeight(20),
-        itemCount: produks.length,
-      ),
+      // body:
+      // ListView.separated(
+      //   itemBuilder: (context, index) =>
+      //       OrderCardDetail(item: dataProduks[index]),
+      //   separatorBuilder: (context, index) => SpaceHeight(20),
+      //   itemCount: dataProduks.length,
+      // ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24),
         child: Column(
