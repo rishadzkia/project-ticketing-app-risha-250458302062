@@ -18,7 +18,7 @@ import 'package:ticketing_app/presentation/home/bloc/product/product_bloc.dart';
 import 'package:ticketing_app/presentation/home/bloc/sync_order/sync_order_bloc.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const MainApp()); 
 }
 
 class MainApp extends StatelessWidget {

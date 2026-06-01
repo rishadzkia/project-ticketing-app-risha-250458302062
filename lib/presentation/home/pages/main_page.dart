@@ -73,7 +73,7 @@ class _MainPageState extends State<MainPage> {
       ),
       // GestureDetector fungisnya lebih ke fungsi
       floatingActionButton: GestureDetector(
-        onTap: () => context.push(SettingPrinterPage()),
+        onTap: () => context.push(SettingPrinterPage()), 
         child: Container(
           padding: EdgeInsets.all(12),
           decoration: BoxDecoration(

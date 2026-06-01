@@ -4,10 +4,11 @@ import 'package:ticketing_app/core/assets/assets.gen.dart';
 import 'package:ticketing_app/core/components/components.dart';
 import 'package:ticketing_app/core/constants/colors.dart';
 import 'package:ticketing_app/core/extensions/extensions.dart';
+import 'package:ticketing_app/data/model/response/product_response_model.dart';
 import 'package:ticketing_app/presentation/home/model/product_model.dart';
 
 class OrderCard extends StatelessWidget {
-  final ProductModel itemProduk;
+  final Product itemProduk;
   const OrderCard({super.key, required this.itemProduk});
 
   @override
@@ -26,7 +27,7 @@ class OrderCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  itemProduk.namaProduk,
+                  itemProduk.name ?? 'Tidak ada nama produk',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
               ),
@@ -58,10 +59,11 @@ class OrderCard extends StatelessWidget {
           ),
           Text(
             // itemProduk: Nyimpen data model
-            itemProduk.typeProduk,
-            style: TextStyle(
+            // Biasanya kalo dia punya class tersendiri, dikasih tanda tanya
+            itemProduk.category?.name ?? 'Tidak ada kategori',
+            style: TextStyle( 
               fontSize: 12,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w400, 
               color: AppColors.grey,
             ),
           ),
@@ -70,14 +72,16 @@ class OrderCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                itemProduk.hargaProduk.currencyFormatRp,
+                // Kasih negasi karena currency format Rp itu butuh data yang pasti,
+                //jadi kasih tanda tanya untuk ngasih tau kalo dia bisa null
+                itemProduk.price!.currencyFormatRp,
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
               ),
               // Pake ini karena diawal pake valuenotifier
               ValueListenableBuilder(
                 valueListenable: quantityNotifier,
                 builder: (context, value, child) => Text(
-                  (itemProduk.hargaProduk * value).currencyFormatRp,
+                  (itemProduk.price! * value).currencyFormatRp,
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
                 ),
               ),

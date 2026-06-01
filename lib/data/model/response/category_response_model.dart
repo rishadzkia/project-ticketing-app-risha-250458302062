@@ -29,7 +29,7 @@ class CategoryResponseModel {
 
 class Category {
   final int? id;
-  final String? name;
+  final String? name; 
   final String? description;
   final String? createdAt;
   final String? updatedAt;
