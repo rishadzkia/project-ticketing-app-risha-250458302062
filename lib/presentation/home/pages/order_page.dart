@@ -25,6 +25,7 @@ class _OrderPageState extends State<OrderPage> {
   // jadi kalau kita mau fetch data dari API atau database, kita bisa taruh di initState
   @override
   void initState() {
+    // Pake yang local biar bisa dipakai offline 
     context.read<ProductBloc>().add(ProductEvent.getLocalProducts());
     context.read<CategoryBloc>().add(CategoryEvent.fetch());
 
@@ -33,7 +34,7 @@ class _OrderPageState extends State<OrderPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( 
       appBar: AppBar(title: const Text('Penjualan')),
       body: Column(
         children: [

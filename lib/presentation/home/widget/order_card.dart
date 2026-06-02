@@ -7,12 +7,12 @@ import 'package:ticketing_app/core/extensions/extensions.dart';
 import 'package:ticketing_app/data/model/response/product_response_model.dart';
 import 'package:ticketing_app/presentation/home/model/product_model.dart';
 
-class OrderCard extends StatelessWidget {
+class OrderCard extends StatelessWidget { 
   final Product itemProduk;
-  const OrderCard({super.key, required this.itemProduk});
+  const OrderCard({super.key, required this.itemProduk}); 
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     final quantityNotifier = ValueNotifier(0);
     return Container(
       padding: EdgeInsets.all(24),
@@ -64,7 +64,7 @@ class OrderCard extends StatelessWidget {
             style: TextStyle( 
               fontSize: 12,
               fontWeight: FontWeight.w400, 
-              color: AppColors.grey,
+              color: AppColors.grey, 
             ),
           ),
           SpaceHeight(8),

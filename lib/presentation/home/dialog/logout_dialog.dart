@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:ticketing_app/core/components/components.dart';
 import 'package:ticketing_app/core/constants/colors.dart';
 import 'package:ticketing_app/core/extensions/build_context_ext.dart';
+import 'package:ticketing_app/data/datasource/auth_local_datasource.dart';
 import 'package:ticketing_app/presentation/auth/pages/login.dart';
+import 'package:ticketing_app/presentation/auth/pages/splash_screen.dart';
 
 class LogoutDialog extends StatelessWidget {
   const LogoutDialog({super.key});
@@ -43,8 +45,12 @@ class LogoutDialog extends StatelessWidget {
               SpaceWidth(12),
               Flexible(
                 child: Button.filled(
-                  onPressed: () {
-                    context.pushAndRemoveUntil(LoginPage(), (route) => false);
+                  onPressed: () async {
+                    // pop = Untuk nutup dialog nya,
+                    //karena kita udh yakin buat logout, jadi dialog nya ngga perlu lagi
+                    context.pop();
+                    await AuthLocalDatasource().removeAuthData();
+                    context.pushReplacement(SplashScreen());
                   },
                   label: 'Logout',
                   borderRadius: 8,

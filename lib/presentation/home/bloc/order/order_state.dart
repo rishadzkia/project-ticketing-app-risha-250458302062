@@ -1,5 +1,7 @@
 part of 'order_bloc.dart';
 
+// Adanya kondisi dalam aplikasi 
+// Output akhirnya berbentuk UI 
 @freezed
 class OrderState with _$OrderState {
   const factory OrderState.initial() = _Initial;
@@ -8,7 +10,7 @@ class OrderState with _$OrderState {
     List<OrderItem> orders,
     int totalQuantity,
     int totalPrice,
-    int paymentNominal,
+    int paymentNominal, 
     String paymentMethod,
     int cashierId,
     String cashierName,

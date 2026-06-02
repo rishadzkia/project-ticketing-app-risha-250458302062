@@ -9,7 +9,7 @@ class AuthRemoteDatasource {
 
   Future<Either<String, AuthResponseModel>> login(
     LoginRequestModel dataLogin) async {
-      final response = await http.post(
+      final response = await http.post( 
         Uri.parse('${Variable.baseUrl}/api/login'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

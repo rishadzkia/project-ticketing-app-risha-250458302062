@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticketing_app/core/assets/assets.gen.dart';
+import 'package:ticketing_app/presentation/auth/bloc/logout/logout_bloc.dart';
+import 'package:ticketing_app/presentation/auth/pages/login.dart';
 import 'package:ticketing_app/presentation/home/dialog/logout_dialog.dart';
 import 'package:ticketing_app/presentation/home/dialog/sync_dialog.dart';
 import 'package:ticketing_app/presentation/home/widget/setting_button.dart';
 
 class SettingPage extends StatelessWidget {
-  const SettingPage({super.key});
+  const SettingPage({super.key}); 
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Setting')),
@@ -25,16 +28,33 @@ class SettingPage extends StatelessWidget {
             subtitle: 'Kelola Printer',
             onPressed: () {},
           ),
-          SettingButton(
-            iconPath: Assets.icons.settings.logout.path,
-            title: 'Logout',
-            subtitle: 'Keluar dari Akun',
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => LogoutDialog(),
+          BlocListener<LogoutBloc, LogoutState>(
+            listener: (context, state) {
+              // Ini buat biar kita ngga nulis kondisi di semua state 
+              // di bagian ini kita cuman mau milih state success aja, kalau error atau loading kita ngga ngapa ngapain
+              state.maybeWhen(
+                success: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                  // Handle logout success
+                }, 
+                orElse: () {},
               );
+              // TODO: implement listener
             },
+            child: SettingButton(
+              iconPath: Assets.icons.settings.logout.path,
+              title: 'Logout',
+              subtitle: 'Keluar dari Akun',
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => LogoutDialog(),
+                );
+              },
+            ),
           ),
           SettingButton(
             iconPath: Assets.icons.settings.syncData.path,
