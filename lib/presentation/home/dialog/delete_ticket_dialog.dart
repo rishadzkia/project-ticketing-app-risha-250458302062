@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticketing_app/core/components/components.dart';
 import 'package:ticketing_app/core/constants/colors.dart';
 import 'package:ticketing_app/core/extensions/build_context_ext.dart';
+import 'package:ticketing_app/presentation/home/bloc/product/product_bloc.dart';
 
 class DeleteTicketDialog extends StatelessWidget {
-  const DeleteTicketDialog({super.key});
+  final int id;
+  const DeleteTicketDialog({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,12 @@ class DeleteTicketDialog extends StatelessWidget {
               SpaceWidth(12),
               Flexible(
                 child: Button.filled(
-                  onPressed: () => context.pop(),
+                  onPressed: () {
+                    context.read<ProductBloc>().add(
+                      ProductEvent.deleteTicket(id),
+                    );
+                    context.pop();
+                  },
                   label: 'Hapus',
                   borderRadius: 8,
                   height: 44,

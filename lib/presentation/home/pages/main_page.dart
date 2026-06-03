@@ -54,26 +54,26 @@ class _MainPageState extends State<MainPage> {
               iconPath: Assets.icons.nav.ticket.path,
               label: "Ticket",
               isActive: _selectedIndex == 1,
-              onTap: () => _onItemTapped(0),
+              onTap: () => _onItemTapped(1),
             ),
             NavItem(
               iconPath: Assets.icons.nav.history.path,
               label: "History",
               isActive: _selectedIndex == 2,
-              onTap: () => _onItemTapped(0),
+              onTap: () => _onItemTapped(2),
             ),
             NavItem(
               iconPath: Assets.icons.nav.setting.path,
               label: "Setting",
               isActive: _selectedIndex == 3,
-              onTap: () => _onItemTapped(0),
+              onTap: () => _onItemTapped(3),
             ),
           ],
         ),
       ),
       // GestureDetector fungisnya lebih ke fungsi
       floatingActionButton: GestureDetector(
-        onTap: () => context.push(SettingPrinterPage()), 
+        onTap: () => context.push(SettingPrinterPage()),
         child: Container(
           padding: EdgeInsets.all(12),
           decoration: BoxDecoration(
