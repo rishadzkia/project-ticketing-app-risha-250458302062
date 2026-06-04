@@ -6,8 +6,10 @@ import 'package:ticketing_app/core/constants/colors.dart';
 import 'package:ticketing_app/core/extensions/build_context_ext.dart';
 import 'package:ticketing_app/core/extensions/num_ext.dart';
 import 'package:ticketing_app/presentation/home/bloc/category/category_bloc.dart';
+import 'package:ticketing_app/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:ticketing_app/presentation/home/bloc/product/product_bloc.dart';
 import 'package:ticketing_app/presentation/home/model/product_model.dart';
+import 'package:ticketing_app/presentation/home/pages/order_detail_page.dart';
 import 'package:ticketing_app/presentation/home/widget/order_card.dart';
 
 class OrderPage extends StatefulWidget {
@@ -25,7 +27,7 @@ class _OrderPageState extends State<OrderPage> {
   // jadi kalau kita mau fetch data dari API atau database, kita bisa taruh di initState
   @override
   void initState() {
-    // Pake yang local biar bisa dipakai offline 
+    // Pake yang local biar bisa dipakai offline
     context.read<ProductBloc>().add(ProductEvent.getLocalProducts());
     context.read<CategoryBloc>().add(CategoryEvent.fetch());
 
@@ -34,7 +36,7 @@ class _OrderPageState extends State<OrderPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
+    return Scaffold(
       appBar: AppBar(title: const Text('Penjualan')),
       body: Column(
         children: [
@@ -140,14 +142,14 @@ class _OrderPageState extends State<OrderPage> {
                           selectedCategoryId == null ||
                           product.category?.id == selectedCategoryId;
                       return matchesSearch && matchesCategory;
-                    }) 
+                    })
                     .toList();
 
                 if (products.isEmpty) {
                   return Center(
                     child: Text('Tidak ada data tiket yang ditemukan'),
                   );
-                } 
+                }
                 return ListView.separated(
                   // item builder untuk ngeluarin widget nya yaitu order card
                   itemBuilder: (context, index) =>
@@ -155,7 +157,7 @@ class _OrderPageState extends State<OrderPage> {
                       OrderCard(itemProduk: products[index]),
                   // separator builder untuk ngasih jarak antar list
                   separatorBuilder: (context, index) => SpaceHeight(12),
-                  // item count untuk ngeluarin data nya 
+                  // item count untuk ngeluarin data nya
                   itemCount: products.length,
                 );
               },
@@ -174,9 +176,33 @@ class _OrderPageState extends State<OrderPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text('Order Summary'),
-                  Text(
-                    4000.currencyFormatRp,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  BlocBuilder<CheckoutBloc, CheckoutState>(
+                    builder: (context, state) {
+                      return state.maybeWhen(
+                        success: (checkout) {
+                          final total = checkout.fold<int>(
+                            0,
+                            (previousValue, element) =>
+                                (previousValue +
+                                element.product.price! * element.quantity),
+                          );
+                          return Text(
+                            total.currencyFormatRp,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        },
+                        orElse: () => Text(
+                          '0',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -185,7 +211,7 @@ class _OrderPageState extends State<OrderPage> {
               flex: 1,
               child: Button.filled(
                 onPressed: () {
-                  context.pop();
+                  context.push(OrderDetailPage());
                 },
                 label: 'Process',
               ),

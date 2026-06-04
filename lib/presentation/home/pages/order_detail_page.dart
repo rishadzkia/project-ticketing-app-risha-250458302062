@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticketing_app/core/core.dart';
+import 'package:ticketing_app/presentation/home/bloc/checkout/checkout_bloc.dart';
+import 'package:ticketing_app/presentation/home/bloc/order/order_bloc.dart';
 import 'package:ticketing_app/presentation/home/dialog/payment_cash_dialog.dart';
 import 'package:ticketing_app/presentation/home/dialog/payment_qris_dialog.dart';
+import 'package:ticketing_app/presentation/home/model/order_item_model.dart';
 import 'package:ticketing_app/presentation/home/model/order_model.dart';
 import 'package:ticketing_app/presentation/home/model/product_model.dart';
 import 'package:ticketing_app/presentation/home/widget/order_card_detail.dart';
 import 'package:ticketing_app/presentation/home/widget/payment_method.dart';
 
-class OrderDetailPage extends StatelessWidget {
-  final List<ProductModel> dataProduks;
-  const OrderDetailPage({super.key, required this.dataProduks});
+class OrderDetailPage extends StatefulWidget {
+  const OrderDetailPage({super.key});
 
+  @override
+  State<OrderDetailPage> createState() => _OrderDetailPageState();
+}
+
+class _OrderDetailPageState extends State<OrderDetailPage> {
+  int totalPrice = 0;
+  List<OrderItem> orderItems = [];
   @override
   Widget build(BuildContext context) {
     int paymentButtonIndex = 0;
@@ -25,13 +35,20 @@ class OrderDetailPage extends StatelessWidget {
           ),
         ),
       ),
-      // body:
-      // ListView.separated(
-      //   itemBuilder: (context, index) =>
-      //       OrderCardDetail(item: dataProduks[index]),
-      //   separatorBuilder: (context, index) => SpaceHeight(20),
-      //   itemCount: dataProduks.length,
-      // ),
+      body: BlocBuilder<CheckoutBloc, CheckoutState>(
+        builder: (context, state) {
+          final products = state.maybeWhen(
+            orElse: () => [],
+            success: (checkout) => checkout,
+          );
+          return ListView.separated(
+            itemBuilder: (context, index) =>
+                OrderCardDetail(item: products[index]),
+            separatorBuilder: (context, index) => SpaceHeight(20),
+            itemCount: products.length,
+          );
+        },
+      ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24),
         child: Column(
@@ -105,12 +122,35 @@ class OrderDetailPage extends StatelessWidget {
                           'Order Summary',
                           style: TextStyle(fontWeight: FontWeight.w400),
                         ),
-                        Text(
-                          60000.currencyFormatRp,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16,
-                          ),
+                        BlocBuilder<CheckoutBloc, CheckoutState>(
+                          builder: (context, state) {
+                            return state.maybeWhen(
+                              success: (checkout) {
+                                orderItems = checkout;
+                                final total = checkout.fold<int>(
+                                  0,
+                                  (previousValue, element) =>
+                                      previousValue +
+                                      element.product.price! * element.quantity,
+                                );
+                                totalPrice = total;
+                                return Text(
+                                  total.currencyFormatRp,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 16,
+                                  ),
+                                );
+                              },
+                              orElse: () => Text(
+                                '0',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -127,11 +167,14 @@ class OrderDetailPage extends StatelessWidget {
                             builder: (context) => PaymentQrisDialog(),
                           );
                         } else if (paymentButtonIndex == 1) {
+                          context.read<OrderBloc>().add(
+                            OrderEvent.addPaymentMethod('Tunai', orderItems),
+                          );
                           showDialog(
                             context: context,
                             builder: (context) =>
                                 // Harus diikutin sama yang required
-                                PaymentCashDialog(totalPrice: 14000),
+                                PaymentCashDialog(totalPrice: totalPrice),
                           );
                         }
                       },

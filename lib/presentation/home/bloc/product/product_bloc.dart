@@ -83,14 +83,22 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         event.model.id!,
       );
       response.fold((error) => emit(_Error(error)), (success) {
-        final updateProduct = products.map((products) {
-          if (products.id == event.model.id) {
-            return success.data;
+        final updateProduct = products.map((oldProduct) {
+          if (oldProduct.id == event.model.id) {
+            return Product(
+              id: oldProduct.id,
+              name: event.model.name,
+              price: event.model.price,
+              category: oldProduct.category,
+              categoryId: oldProduct.categoryId, 
+              createdAt: oldProduct.createdAt,
+              updatedAt: oldProduct.updatedAt, 
+            );
           }
-          return success.data;
+          return oldProduct;
         }).toList();
         products = updateProduct;
-        emit(_Success(products));
+        emit(_Success(updateProduct));
       });
     });
 

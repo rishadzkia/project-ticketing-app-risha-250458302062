@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticketing_app/core/assets/assets.gen.dart';
 import 'package:ticketing_app/core/components/components.dart';
 import 'package:ticketing_app/core/constants/colors.dart';
 import 'package:ticketing_app/core/extensions/extensions.dart';
 import 'package:ticketing_app/data/model/response/product_response_model.dart';
+import 'package:ticketing_app/presentation/home/bloc/checkout/checkout_bloc.dart';
+import 'package:ticketing_app/presentation/home/model/order_item_model.dart';
 import 'package:ticketing_app/presentation/home/model/product_model.dart';
 
-class OrderCard extends StatelessWidget { 
+class OrderCard extends StatefulWidget {
   final Product itemProduk;
-  const OrderCard({super.key, required this.itemProduk}); 
+  const OrderCard({super.key, required this.itemProduk});
 
   @override
-  Widget build(BuildContext context) { 
-    final quantityNotifier = ValueNotifier(0);
+  State<OrderCard> createState() => _OrderCardState();
+}
+
+class _OrderCardState extends State<OrderCard> {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -27,45 +34,65 @@ class OrderCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  itemProduk.name ?? 'Tidak ada nama produk',
+                  widget.itemProduk.name ?? 'Tidak ada nama produk',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
               ),
               InkWell(
                 // Saat di tap mau ada action apa
                 onTap: () {
-                  if (quantityNotifier.value > 0) {
-                    quantityNotifier.value--;
-                  }
+                  context.read<CheckoutBloc>().add(
+                    CheckoutEvent.removeCheckout(widget.itemProduk),
+                  );
                 },
                 child: Assets.icons.reduceQuantity.svg(),
               ),
               // Mengubah UI jika ada sesutu yang berubah
-              ValueListenableBuilder(
-                valueListenable: quantityNotifier,
-                // Builder formatnya ada tiga
-                builder: (context, value, _) => Text(
-                  '$value',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
-                ),
-              ),
+              BlocBuilder<CheckoutBloc, CheckoutState>(
+                builder: (context, state) {
+                  final quantity = state.maybeWhen(
+                    success: (checkout) => checkout
+                        .firstWhere(
+                          (e) => e.product.id == widget.itemProduk.id,
+                          orElse: () => OrderItem(
+                            product: widget.itemProduk,
+                            quantity: 0,
+                          ),
+                        )
+                        .quantity,
 
+                    orElse: () => 0,
+                  );
+                  return Text(
+                    quantity.toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  );
+                },
+              ),
               // Ini button untuk tambah quantity
               InkWell(
-                onTap: () => quantityNotifier.value++,
+                onTap: () {
+                  context.read<CheckoutBloc>().add(
+                    CheckoutEvent.addCheckout(widget.itemProduk),
+                  );
+                },
                 child: Assets.icons.addQuantity.svg(),
               ),
             ],
           ),
-          Text(
-            // itemProduk: Nyimpen data model
-            // Biasanya kalo dia punya class tersendiri, dikasih tanda tanya
-            itemProduk.category?.name ?? 'Tidak ada kategori',
-            style: TextStyle( 
-              fontSize: 12,
-              fontWeight: FontWeight.w400, 
-              color: AppColors.grey, 
-            ),
+          Row(
+            children: [
+              Text(
+                // itemProduk: Nyimpen data model
+                // Biasanya kalo dia punya class tersendiri, dikasih tanda tanya
+                widget.itemProduk.category?.name ?? 'Tidak ada kategori',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.grey,
+                ),
+              ),
+            ],
           ),
           SpaceHeight(8),
           Row(
@@ -74,16 +101,40 @@ class OrderCard extends StatelessWidget {
               Text(
                 // Kasih negasi karena currency format Rp itu butuh data yang pasti,
                 //jadi kasih tanda tanya untuk ngasih tau kalo dia bisa null
-                itemProduk.price!.currencyFormatRp,
+                widget.itemProduk.price!.currencyFormatRp,
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
               ),
               // Pake ini karena diawal pake valuenotifier
-              ValueListenableBuilder(
-                valueListenable: quantityNotifier,
-                builder: (context, value, child) => Text(
-                  (itemProduk.price! * value).currencyFormatRp,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
-                ),
+              BlocBuilder<CheckoutBloc, CheckoutState>(
+                builder: (context, state) {
+                  return state.maybeWhen(
+                    success: (checkout) {
+                      final quantity = checkout
+                          .firstWhere(
+                            (e) => e.product.id == widget.itemProduk.id,
+                            orElse: () => OrderItem(
+                              product: widget.itemProduk,
+                              quantity: 0,
+                            ),
+                          )
+                          .quantity;
+                      return Text(
+                        (widget.itemProduk.price! * quantity).currencyFormatRp,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      );
+                    },
+                    orElse: () => Text(
+                      '0',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                  );
+                },
               ),
             ],
           ),
