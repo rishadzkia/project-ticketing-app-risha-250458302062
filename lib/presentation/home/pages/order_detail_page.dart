@@ -161,7 +161,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                     flex: 1,
                     child: Button.filled(
                       onPressed: () {
-                        if (paymentButtonIndex == 0) {
+                        if (paymentButtonIndex == 0) { 
                           showDialog(
                             context: context,
                             builder: (context) => PaymentQrisDialog(),

@@ -130,9 +130,9 @@ class _PaymentCashDialogState extends State<PaymentCashDialog> {
                       totalPrice,
                       paymentNominal,
                       paymentMethod,
-                      cashierId, 
+                      cashierId,
                       cashierName,
-                    ) { 
+                    ) {
                       final orderModel = OrderModel(
                         paymentMethod: paymentMethod,
                         nominalPayment: paymentNominal,
@@ -151,7 +151,16 @@ class _PaymentCashDialogState extends State<PaymentCashDialog> {
               // TODO: implement listener
             },
             child: Button.filled(
-              onPressed: () {},
+              onPressed: () {
+                int nominal = int.parse(
+                  nominalController.text
+                      .replaceAll('Rp', '')
+                      .replaceAll('.', ''),
+                );
+                context.read<OrderBloc>().add(
+                  OrderEvent.addNominalPayment(nominal),
+                );
+              },
               label: "Bayar",
               // paidindex -- 1 = Gak ada button yang dipilih
               disabled: paidIndex == -1,
