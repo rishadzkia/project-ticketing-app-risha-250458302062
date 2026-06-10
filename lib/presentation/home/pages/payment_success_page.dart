@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:ticketing_app/core/constants/colors.dart';
 import 'package:ticketing_app/core/core.dart';
+import 'package:ticketing_app/data/outputs/transaction_print.dart';
+import 'package:ticketing_app/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:ticketing_app/presentation/home/model/order_model.dart';
 import 'package:ticketing_app/presentation/home/pages/main_page.dart';
 
@@ -128,7 +132,26 @@ class _PaymentSuccessPageState extends State<PaymentSuccessPage> {
         padding: EdgeInsets.fromLTRB(36, 0, 36, 20),
         child: Button.filled(
           onPressed: () async {
-            
+            try {
+              final printData = await TransactionPrint.instance
+                  .printTransaction(widget.order);
+              await PrintBluetoothThermal.writeBytes(printData);
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Struk berhasil dicetak')),
+                );
+              }
+              context.read<CheckoutBloc>().add(CheckoutEvent.started());
+              context.pushReplacement(MainPage());
+            } catch (error) {
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Gagal cetak struk : ${error.toString()}'),
+                  ),
+                );
+              }
+            }
           },
           label: 'Cetak Transaksi',
           borderRadius: 10,

@@ -5,7 +5,7 @@ import 'package:ticketing_app/core/constants/colors.dart';
 import 'package:ticketing_app/presentation/home/model/printer_model.dart';
 
 class MenuPrinterContent extends StatelessWidget {
-  final PrinterModel data;
+  final BluetoothInfo data;
   final bool isSelected;
   const MenuPrinterContent({
     super.key,
@@ -29,7 +29,7 @@ class MenuPrinterContent extends StatelessWidget {
             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
           ),
           Text(
-            'Alamat MAC: ${data.address}',
+            'Alamat MAC: ${data.macAdress}',
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w400,

@@ -1,14 +1,16 @@
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:ticketing_app/core/assets/assets.gen.dart';
 import 'package:ticketing_app/core/components/components.dart';
 import 'package:ticketing_app/core/constants/colors.dart';
-import 'package:ticketing_app/core/extensions/date_time_ext.dart';
+
 import 'package:ticketing_app/core/extensions/extensions.dart';
-import 'package:ticketing_app/presentation/home/model/history_model.dart';
+
+import 'package:ticketing_app/presentation/home/model/order_model.dart';
 
 class HistoryCard extends StatelessWidget {
   // Nama custom kalo mau manggil data dummy
-  final HistoryModel itemHistory;
+  final OrderModel itemHistory;
   const HistoryCard({super.key, required this.itemHistory});
 
   @override
@@ -28,12 +30,18 @@ class HistoryCard extends StatelessWidget {
             children: [
               Text(
                 // Panggil data dummy
-                itemHistory.name,
+                'tiket ${itemHistory.id.toString()}',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               SpaceHeight(5),
               Text(
-                itemHistory.dateTime.toFormattedDayTime(),
+                DateFormat('dd MMM yyy').format(
+                  DateTime(
+                    int.parse(itemHistory.transactionTime.substring(0, 4)),
+                    int.parse(itemHistory.transactionTime.substring(5, 7)),
+                    int.parse(itemHistory.transactionTime.substring(8, 10)),
+                  ), 
+                ),
                 style: TextStyle(
                   fontSize: 14,
                   color: AppColors.grey,
@@ -46,7 +54,7 @@ class HistoryCard extends StatelessWidget {
           Spacer(),
           Text(
             // currency format = Dari template untuk menampilkan format harga sesuai dengan settingan yang ada di template
-            itemHistory.price.currencyFormatRp,
+            itemHistory.totalPrice.currencyFormatRp,
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ],

@@ -49,143 +49,156 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
           );
         },
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Karena setiap button nya ada action nya masing masing yang berneda
-            StatefulBuilder(
-              builder: (context, setState) => Row(
-                children: [
-                  Expanded(
-                    child: PaymentMethodButton(
-                      iconPath: Assets.icons.payment.qris.path,
-                      label: "QRIS",
-                      isActive: paymentButtonIndex == 0,
-                      onPressed: () => setState(() => paymentButtonIndex = 0),
-                    ),
-                  ),
-                  SpaceWidth(20),
-                  Expanded(
-                    child: PaymentMethodButton(
-                      iconPath: Assets.icons.payment.qris.path,
-                      label: "QRIS",
-                      isActive: paymentButtonIndex == 0,
-                      onPressed: () => setState(() => paymentButtonIndex = 0),
-                    ),
-                  ),
-                  SpaceWidth(20),
-                  Expanded(
-                    child: PaymentMethodButton(
-                      iconPath: Assets.icons.payment.qris.path,
-                      label: "Tunai",
-                      isActive: paymentButtonIndex == 1,
-                      onPressed: () => setState(() => paymentButtonIndex = 1),
-                    ),
-                  ),
-                  SpaceWidth(20),
-                  Expanded(
-                    child: PaymentMethodButton(
-                      iconPath: Assets.icons.payment.qris.path,
-                      label: "Transfer",
-                      isActive: paymentButtonIndex == 2,
-                      onPressed: () => setState(() => paymentButtonIndex = 2),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SpaceHeight(24),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 30,
-                    spreadRadius: 0,
-                    offset: Offset(0, -2),
-                    color: AppColors.black.withOpacity(0.8),
-                    blurStyle: BlurStyle.outer,
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Order Summary',
-                          style: TextStyle(fontWeight: FontWeight.w400),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+
+        children: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Karena setiap button nya ada action nya masing masing yang berneda
+              StatefulBuilder(
+                builder: (context, setState) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: (24.0)),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: PaymentMethodButton(
+                          iconPath: Assets.icons.payment.qris.path,
+                          label: "QRIS",
+                          isActive: paymentButtonIndex == 0,
+                          onPressed: () =>
+                              setState(() => paymentButtonIndex = 0),
                         ),
-                        BlocBuilder<CheckoutBloc, CheckoutState>(
-                          builder: (context, state) {
-                            return state.maybeWhen(
-                              success: (checkout) {
-                                orderItems = checkout;
-                                final total = checkout.fold<int>(
-                                  0,
-                                  (previousValue, element) =>
-                                      previousValue +
-                                      element.product.price! * element.quantity,
-                                );
-                                totalPrice = total;
-                                return Text(
-                                  total.currencyFormatRp,
+                      ),
+                      SpaceWidth(20),
+                      Expanded(
+                        child: PaymentMethodButton(
+                          iconPath: Assets.icons.payment.qris.path,
+                          label: "QRIS",
+                          isActive: paymentButtonIndex == 0,
+                          onPressed: () =>
+                              setState(() => paymentButtonIndex = 0),
+                        ),
+                      ),
+                      SpaceWidth(20),
+                      Expanded(
+                        child: PaymentMethodButton(
+                          iconPath: Assets.icons.payment.qris.path,
+                          label: "Tunai",
+                          isActive: paymentButtonIndex == 1,
+                          onPressed: () =>
+                              setState(() => paymentButtonIndex = 1),
+                        ),
+                      ),
+                      SpaceWidth(20),
+                      Expanded(
+                        child: PaymentMethodButton(
+                          iconPath: Assets.icons.payment.qris.path,
+                          label: "Transfer",
+                          isActive: paymentButtonIndex == 2,
+                          onPressed: () =>
+                              setState(() => paymentButtonIndex = 2),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SpaceHeight(24),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 30,
+                      spreadRadius: 0,
+                      offset: Offset(0, -2),
+                      color: AppColors.black.withOpacity(0.8),
+                      blurStyle: BlurStyle.outer,
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Order Summary',
+                            style: TextStyle(fontWeight: FontWeight.w400),
+                          ),
+                          BlocBuilder<CheckoutBloc, CheckoutState>(
+                            builder: (context, state) {
+                              return state.maybeWhen(
+                                success: (checkout) {
+                                  orderItems = checkout;
+                                  final total = checkout.fold<int>(
+                                    0,
+                                    (previousValue, element) =>
+                                        previousValue +
+                                        element.product.price! *
+                                            element.quantity,
+                                  );
+                                  totalPrice = total;
+                                  return Text(
+                                    total.currencyFormatRp,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 16,
+                                    ),
+                                  );
+                                },
+                                orElse: () => Text(
+                                  '0',
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
                                   ),
-                                );
-                              },
-                              orElse: () => Text(
-                                '0',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
                                 ),
-                              ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Mengambil space
+                    Expanded(
+                      // Mau ngambil satu space, jadi biar langusng kebagi 2
+                      flex: 1,
+                      child: Button.filled(
+                        onPressed: () {
+                          if (paymentButtonIndex == 0) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => PaymentQrisDialog(),
                             );
-                          },
-                        ),
-                      ],
+                          } else if (paymentButtonIndex == 1) {
+                            context.read<OrderBloc>().add(
+                              OrderEvent.addPaymentMethod('Tunai', orderItems),
+                            );
+                            showDialog(
+                              context: context,
+                              builder: (context) =>
+                                  // Harus diikutin sama yang required
+                                  PaymentCashDialog(totalPrice: totalPrice),
+                            );
+                          }
+                        },
+                        label: "Process",
+                      ),
                     ),
-                  ),
-                  // Mengambil space
-                  Expanded(
-                    // Mau ngambil satu space, jadi biar langusng kebagi 2
-                    flex: 1,
-                    child: Button.filled(
-                      onPressed: () {
-                        if (paymentButtonIndex == 0) { 
-                          showDialog(
-                            context: context,
-                            builder: (context) => PaymentQrisDialog(),
-                          );
-                        } else if (paymentButtonIndex == 1) {
-                          context.read<OrderBloc>().add(
-                            OrderEvent.addPaymentMethod('Tunai', orderItems),
-                          );
-                          showDialog(
-                            context: context,
-                            builder: (context) =>
-                                // Harus diikutin sama yang required
-                                PaymentCashDialog(totalPrice: totalPrice),
-                          );
-                        }
-                      },
-                      label: "Process",
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }

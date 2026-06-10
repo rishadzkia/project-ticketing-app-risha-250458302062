@@ -145,7 +145,9 @@ class _PaymentCashDialogState extends State<PaymentCashDialog> {
                         transactionTime: DateTime.now().toIso8601String(),
                       );
                       ProductLocalDatasource.instance.insertOrder(orderModel);
-                      context.pushReplacement(PaymentSuccessPage());
+                      context.pushReplacement(
+                        PaymentSuccessPage(order: orderModel),
+                      );
                     },
               );
               // TODO: implement listener
